@@ -5,6 +5,8 @@
 
 char *get_word(int num_of_lines, int random_number, char word_container[], FILE *fp); 
 int word_counter(int argc, char **argv);
+int strcmp_cap_or_lower(char user_guess, char *rdom);
+
 int main(int argc, char **argv)
 {
 	FILE *fp;
@@ -37,7 +39,43 @@ int main(int argc, char **argv)
 	printf("This is random word\n");
 	char * random = get_word(num_of_words, list_row, word_container, fp);
 	printf("This is letter in random word ---> %c\n", *(random + 1));
-	printf("This is word----> %s", random); 
+	printf("This is word----> %s", random);
+	
+	// NEW STUF***********************************************************************
+	//char user_character = getchar();
+	// visual format in these lines possibly put in it own function
+	char display_word[37] = {'\0'};
+	int space = 1;
+	char display = '_';
+	int guess_num = 0;
+	for(int i = 0; i < strlen(random); i++){
+		printf("%*c ", space, display );
+		
+	}
+	// ******************************************* 
+	char user_guess = getchar();
+	while(1){
+		guess_num++;
+		char *rdom;
+		*rdom = *(random + i);
+		for(int i = 0; i < strlen(random); i++){
+			int comparison = strcmp_cap_or_lower(user_character, rdom);
+			if(strcmp_cap_or_lower == 0){
+				count++;
+				display_word[i] = *(random + i);
+			}else{
+				display_word[i] = display;
+			}
+			guess++;
+			if (count == strlen(random - 1)){
+				printf("you won");
+				break;
+			}
+		}
+		user_guess = '\0';
+		user_guess = getchar;
+	}
+	//****************
 }
 
 int word_counter(int argc, char **argv)
@@ -67,4 +105,29 @@ char * get_word(int num_of_lines, int random_number, char word_container[], FILE
 			continue;
 		}
 	}
+}
+
+
+// Everything above is working so far will add everything at this function call
+int strcmp_cap_or_lower(char user_guess, char *rdom)  //get user guess from  getchar in previous lines and assess for the capital or lower case and random word.
+{
+	int result = 1;
+	char case_conversion = ('a' - 'A');
+	int guess = 5;
+	if(user_guess >  'Z'){  //subtract 32 to get lowercase too
+		if((user_guess == *(random + i) ||((user_guess - case_conversion) == *(random + i))){
+			result = 0;
+		}else{
+			continue;
+		}
+	}else{
+		if((user_guess == *(random + i) || ((user_guess + case_conversion) == *(random + i))){
+			result = 0;
+		}else{
+			continue;
+		}
+	}
+	
+	return(result);
+
 }
