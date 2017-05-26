@@ -2,10 +2,11 @@
 #include <string.h>
 #include <stdlib.h>
 #include <time.h>
+#include <ctype.h>
 
 char *get_word(int num_of_lines, int random_number, char word_container[], FILE *fp); 
 int word_counter(int argc, char **argv);
-int strcmp_cap_or_lower(char user_guess, char *rdom);
+int strcmp_cap_or_lower(char user_guess, char rdom);
 
 int main(int argc, char **argv)
 {
@@ -53,27 +54,37 @@ int main(int argc, char **argv)
 		
 	}
 	// ******************************************* 
-	char user_guess = getchar();
+	printf("input a char: ");
+	char mike[100];
+	fgets(mike,100, stdin);
+	char user_guess = mike[0];
+	int i;
 	while(1){
 		guess_num++;
-		char *rdom;
-		*rdom = *(random + i);
-		for(int i = 0; i < strlen(random); i++){
-			int comparison = strcmp_cap_or_lower(user_character, rdom);
-			if(strcmp_cap_or_lower == 0){
+		char rdom;
+		int count = 0;
+		for(i = 0; i < strlen(random); i++){
+			int comparison = strcmp_cap_or_lower(user_guess, rdom);
+			if(comparison == 0){
+				printf("This is print statement");
 				count++;
-				display_word[i] = *(random + i);
+				display_word[i] = user_guess;
 			}else{
 				display_word[i] = display;
 			}
-			guess++;
-			if (count == strlen(random - 1)){
+			guess_num++;
+			if (count == (strlen(random) - 1)){
+				printf("COUNT - %d\n", count);
+				printf("LENGTH: %ld\n", strlen(random));
 				printf("you won");
 				break;
 			}
 		}
-		user_guess = '\0';
-		user_guess = getchar;
+		display_word[i] = '\0';
+		printf("TEST %s\n", display_word);
+		printf("input a char: ");
+		fgets(mike,100, stdin);
+		char user_guess = mike[0];
 	}
 	//****************
 }
@@ -87,8 +98,8 @@ int word_counter(int argc, char **argv)
 	while(fgets(line, 36, fp) != NULL){
 		count++;
 	}
-	return(count);
 	rewind(fp);
+	return(count);
 }
 
 
@@ -100,34 +111,16 @@ char * get_word(int num_of_lines, int random_number, char word_container[], FILE
 		if ( i == random_number){
 			word_container[strlen(word_container) -1] = '\0';
 			return(word_container);
-			break;
-		}else{
-			continue;
 		}
 	}
 }
 
-
 // Everything above is working so far will add everything at this function call
-int strcmp_cap_or_lower(char user_guess, char *rdom)  //get user guess from  getchar in previous lines and assess for the capital or lower case and random word.
+int strcmp_cap_or_lower(char user_guess, char rdom)  //get user guess from  getchar in previous lines and assess for the capital or lower case and random word.
 {
-	int result = 1;
-	char case_conversion = ('a' - 'A');
-	int guess = 5;
-	if(user_guess >  'Z'){  //subtract 32 to get lowercase too
-		if((user_guess == *(random + i) ||((user_guess - case_conversion) == *(random + i))){
-			result = 0;
-		}else{
-			continue;
-		}
-	}else{
-		if((user_guess == *(random + i) || ((user_guess + case_conversion) == *(random + i))){
-			result = 0;
-		}else{
-			continue;
-		}
-	}
-	
-	return(result);
-
+	user_guess = tolower(user_guess);
+	rdom = tolower(rdom);
+	if ( rdom == user_guess )
+		return 0;
+	return 1;
 }
