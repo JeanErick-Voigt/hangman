@@ -13,40 +13,36 @@ int main(int arg, char **argv)
 	FILE *fp;
 	fp = fopen(argv[1], "r");
 	char word_container[36];
-	//char *array = "Johnny";
-	char line[15];
-	char *word = "J";
-	char  str[20] = {'\0'};
-	//printf("The word");
-	fgets(line, 15, stdin);
-	int x = strlen(line);
-	line[x - 1] = '\0';
-	printf("length %d\n", x);
-	strcat(str, line);
-	printf("%s\n" , str);
-	if (strcasecmp (str, word) == 0) {
-		printf("the same");
-	}
 
 	int num_of_words = word_counter(argv);
 	printf("The file count is  ----> %d", num_of_words);
-	//printf("The letter %c", line[1]);
-	//return(0);
 
+	char answer[5] = {'\0'};
+
+	while(1){
+		printf("Press q to quit or any character to play\n");
+		fgets(answer, 5, stdin);
+		printf("The length of answer --> %d\n", strlen(answer));
+		//answer[strlen(answer) - 1] = '\0';
+		printf("%s", answer);
+		if(answer[0] == 'q'){
+			printf("answer is q\n");
+		}else{
+			printf("answer is anything else\n");
+		}
+		char answer[5] = {'\0'};
+	}
 	srand(time(NULL));
+
+	
 	int list_row = rand() % num_of_words;      //the row where the word will come from
-	printf("This is the random list row -----> %d \n", list_row);
+
 
 	printf("This is random word\n");
 	char * random = get_word(num_of_words, list_row, word_container, fp);
-	printf("This is letter in random word ---> %c\n", *(random + 1));
 	printf("This is word----> %s\n", random);
 	printf("length = %lu\n", strlen(random));
 	
-	// NEW STUF***********************************************************************
-	//char user_character = getchar();
-	// visual format in these lines possibly put in it own function
-	//char display_word[37] = {'\0'};
 	char *display_word = (char*) malloc(strlen(random + 1)); //remove if doesnt work
 	int space = 1;
 	char display = '_';
@@ -55,13 +51,6 @@ int main(int arg, char **argv)
 		printf("%*c ", space, display );
 		
 	}
-	// ******************************************* 
-	//printf("input a char: ");
-	//char mike[40];
-	//fgets(mike,40, stdin);
-	//mike[strlen(mike) - 1] = '\0';
-	//char user_guess = mike[0];
-	//int i;
 	unsigned int count = 0;
 	int win = 0, loss = 0, game = 0;
 	while(1){
@@ -113,7 +102,7 @@ int main(int arg, char **argv)
 				break;
 			}
 		}
-		//display_word[i+1] = '\0';
+		
 		printf("Test to print word -----------------------> \n");
 		for(int x = 0; x < strlen(random); x++){
  			//printf("letter");
