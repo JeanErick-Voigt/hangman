@@ -5,54 +5,64 @@
 #include <ctype.h>
 
 char *get_word(int num_of_lines, int random_number, char word_container[], FILE *fp); 
-int word_counter(char **argv);
+int word_counter(int argc, char **argv);
 int strcmp_cap_or_lower(char user_guess, char rdom);
 
-int main(int arg, char **argv)
+int main(int argc, char **argv)
 {
 	FILE *fp;
 	fp = fopen(argv[1], "r");
 	char word_container[36];
-
-	int num_of_words = word_counter(argv);
-	printf("The file count is  ----> %d", num_of_words);
-
-	char answer[5] = {'\0'};
-
-	while(1){
-		printf("Press q to quit or any character to play\n");
-		fgets(answer, 5, stdin);
-		printf("The length of answer --> %d\n", strlen(answer));
-		//answer[strlen(answer) - 1] = '\0';
-		printf("%s", answer);
-		if(answer[0] == 'q'){
-			printf("answer is q\n");
-		}else{
-			printf("answer is anything else\n");
-		}
-		char answer[5] = {'\0'};
+	//char *array = "Johnny";
+	char line[15];
+	char *word = "J";
+	char  str[20] = {'\0'};
+	//printf("The word");
+	fgets(line, 15, stdin);
+	int x = strlen(line);
+	line[x - 1] = '\0';
+	printf("length %d\n", x);
+	strcat(str, line);
+	printf("%s\n" , str);
+	if (strcasecmp (str, word) == 0) {
+		printf("the same");
 	}
+
+	int num_of_words = word_counter(argc, argv);
+	printf("The file count is  ----> %d", num_of_words);
+	//printf("The letter %c", line[1]);
+	//return(0);
+
 	srand(time(NULL));
-
-	
 	int list_row = rand() % num_of_words;      //the row where the word will come from
-
+	printf("This is the random list row -----> %d \n", list_row);
 
 	printf("This is random word\n");
 	char * random = get_word(num_of_words, list_row, word_container, fp);
+	printf("This is letter in random word ---> %c\n", *(random + 1));
 	printf("This is word----> %s\n", random);
-	printf("length = %lu\n", strlen(random));
+	printf("length = %d\n", strlen(random));
 	
+	// NEW STUF***********************************************************************
+	//char user_character = getchar();
+	// visual format in these lines possibly put in it own function
+	//char display_word[37] = {'\0'};
 	char *display_word = (char*) malloc(strlen(random + 1)); //remove if doesnt work
 	int space = 1;
 	char display = '_';
 	int guess_num = 0;
-	for(unsigned int i = 0; i < strlen(random); i++){
+	for(int i = 0; i < strlen(random); i++){
 		printf("%*c ", space, display );
 		
 	}
-	unsigned int count = 0;
-	int win = 0, loss = 0, game = 0;
+	// ******************************************* 
+	//printf("input a char: ");
+	//char mike[40];
+	//fgets(mike,40, stdin);
+	//mike[strlen(mike) - 1] = '\0';
+	//char user_guess = mike[0];
+	//int i;
+	int count = 0;
 	while(1){
 		guess_num++;
 		printf("\ninput a char: ");
@@ -61,7 +71,7 @@ int main(int arg, char **argv)
 		mike[(strlen(mike) - 1)] = '\0';
 		char user_guess = '\0';
 		user_guess = mike[0];
-		unsigned int i;
+		int i;
 		for(i = 0; i < (strlen(random)); i++){
 			char rdom = '\0';
 			rdom = random[i];
@@ -71,22 +81,10 @@ int main(int arg, char **argv)
 			comparison = strcmp_cap_or_lower(user_guess, rdom);
 			printf("comparison number before the branch---> %d", comparison);
 			if(comparison == 0){
-				if((*(display_word + i) >= 'A') && (*(display_word + i) <= 'Z')){
-					printf("Already guessed  that, guess again");
-					guess_num -= 1;
-					break;
-				}
-				else if((*(display_word + i) >= 'a' ) && (*(display_word + i) <= 'z')){
-					printf("Already guessed that, guess again");
-					guess_num -= 1;
-					break;
-				}else{
-					printf("This is print statement\n");
-					count++;
-					*(display_word + i) = user_guess; //go back to display_word[i] if it doesnt work
-				}
-			}
-			else if(comparison != 0 && ((*(display_word + i) < 'A' && *(display_word + i) > 'Z') || (*(display_word + i) < 'a' && 
+				printf("This is print statement\n");
+				count++;
+				*(display_word + i) = user_guess; //go back to display_word[i] if it doesnt work
+			}else if(comparison != 0 && ((*(display_word + i) < 'A' && *(display_word + i) > 'Z') || (*(display_word + i) < 'a' && 
 					*(display_word + i) > 'z'))){
 				printf("This is the comparison number ----> %d\n", comparison);
 				printf("This is underscore in else\n");
@@ -102,7 +100,7 @@ int main(int arg, char **argv)
 				break;
 			}
 		}
-		
+		//display_word[i+1] = '\0';
 		printf("Test to print word -----------------------> \n");
 		for(int x = 0; x < strlen(random); x++){
  			//printf("letter");
@@ -116,7 +114,7 @@ int main(int arg, char **argv)
 	//****************
 }
 
-int word_counter(char **argv)
+int word_counter(int argc, char **argv)
 {
 	FILE *fp;
 	char line[36];
@@ -130,8 +128,9 @@ int word_counter(char **argv)
 }
 
 
-char * get_word(int num_of_lines, int random_number, char *word_container, FILE *fp)
+char * get_word(int num_of_lines, int random_number, char word_container[], FILE *fp)
 {
+	int count = 0;
 	for (int i = 0; i <= num_of_lines; i++){
 		fgets(word_container, 36, fp);
 		if ( i == random_number){
