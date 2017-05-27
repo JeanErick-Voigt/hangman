@@ -4,6 +4,9 @@
 #include <time.h>
 #include <ctype.h>
 
+
+//game of hangman that will loop till you don't want to play anymore
+//should keep track of wins and losses
 char *get_word(int num_of_lines, int random_number, char word_container[], FILE *fp); 
 int word_counter(char **argv);
 int strcmp_cap_or_lower(char user_guess, char rdom);
